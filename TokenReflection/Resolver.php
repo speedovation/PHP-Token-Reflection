@@ -183,7 +183,8 @@ class Resolver
 							}
 
 							$constantReflection = $reflection->getBroker()->getConstant($constantName);
-							$value = $constantReflection->getValue();
+							if($constantReflection)
+								$value = $constantReflection->getValue();
 					}
 				} catch (Exception\RuntimeException $e) {
 					$value = self::CONSTANT_NOT_FOUND;

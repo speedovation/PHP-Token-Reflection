@@ -323,6 +323,11 @@ class Memory implements Broker\Backend
 					return $reflection;
 				}
 			}
+			
+			echo "\nConstant $constantName does not exist. Returning null.";
+			
+			//don't throws exception just set all constants null'
+			return null;
 
 			throw new Exception\BrokerException($this->getBroker(), sprintf('Constant %s does not exist.', $constantName), Exception\BrokerException::DOES_NOT_EXIST);
 		}

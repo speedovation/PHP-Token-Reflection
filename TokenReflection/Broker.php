@@ -267,7 +267,7 @@ class Broker
 	 * @throws \TokenReflection\Exception\BrokerException If the given directory does not exist.
 	 * @throws \TokenReflection\Exception\BrokerException If the given directory could not be processed.
 	 */
-	public function processDirectory($path, $filters = array(), $returnReflectionFile = false)
+	public function processDirectory($path, $filters = array('php'), $returnReflectionFile = false)
 	{
 		$realPath = realpath($path);
 		if (!is_dir($realPath)) {
@@ -278,19 +278,41 @@ class Broker
 			$result = array();
 			foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($realPath)) as $entry) {
 				if ($entry->isFile()) {
-					$process = empty($filters);
-					if (!$process) {
-						foreach ((array) $filters as $filter) {
+/*					$process = empty($filters);*/
+/*					if (!$process) {*/
+						
+					$process =	in_array($entry->getExtension(), $filters);
+						
+						/*foreach ((array) $filters as $filter) {
 							$whitelisting = '!' !== $filter{0};
 							if (fnmatch($whitelisting ? $filter : substr($filter, 1), $entry->getPathName(), FNM_NOESCAPE)) {
 								$process = $whitelisting;
 							}
-						}
-					}
+						}*/
+/*					}*/
+					
+					
 
-					if ($process) {
-						$result[$entry->getPathName()] = $this->processFile($entry->getPathName(), $returnReflectionFile);
+					try{
+					
+        					if ($process) {
+        						
+        						$result[$entry->getPathName()] = $this->processFile($entry->getPathName(), $returnReflectionFile);
+        					}
+							
+					} catch (Exception\ParseException $e) {
+						echo "\nParse Error on".$entry->getPathName();
+					} catch (Exception\StreamException $e) {
+						echo "\nStream Error on".$entry->getPathName();
+					
+					} catch (Exception\FileProcessingException $e) {
+						echo "\nFile Processing Error on".$entry->getPathName();
+					
+					} catch (Exception\BrokerException $e) {
+						echo "\nBrokerException Error on".$entry->getPathName();
 					}
+					
+        					
 				}
 			}
 
@@ -423,9 +445,13 @@ class Broker
 			return $this->cache[self::CACHE_CONSTANT][$constantName];
 		}
 
+		
 		if ($constant = $this->backend->getConstant($constantName)) {
 			$this->cache[self::CACHE_CONSTANT][$constantName] = $constant;
 		}
+		
+					
+		
 
 		return $constant;
 	}

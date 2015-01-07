@@ -1,9 +1,9 @@
 {
-	"name": "andrewsville/php-token-reflection",
+	"name": "speedovation/php-token-reflection",
 	"type": "library",
-	"description": "Library emulating the PHP internal reflection using just the tokenized source code.",
-	"keywords": ["library", "tokenizer", "reflection"],
-	"homepage": "http://andrewsville.github.com/PHP-Token-Reflection/",
+	"description": "Fork of Original PHP Token Relection Library - Emulating the PHP internal reflection using just the tokenized source code.",
+	"keywords": ["library", "tokenizer", "reflection","kineticwing"],
+	"homepage": "http://kineticwing.com",
 	"license": "BSD-3",
 
 	"authors": [
@@ -14,6 +14,10 @@
 		{
 			"name": "Jaroslav Hanslík",
 			"homepage": "https://github.com/kukulich"
+		},
+		{
+			"name": "Yash B",
+			"homepage": "https://speedovation.com"			
 		}
 	],
 
